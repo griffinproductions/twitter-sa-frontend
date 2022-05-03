@@ -6,7 +6,7 @@ export default function Home() {
 
   const getTweets = async (query) => {
     console.log(query);
-    const res = await fetch('http://localhost:81/tweets/all');
+    const res = await fetch(`http://localhost:81/tweets/get/${encodeURIComponent(query)}`);
     const data = await res.json();
     setTweets(data);
     console.log(tweets);

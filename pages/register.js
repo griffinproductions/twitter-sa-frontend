@@ -1,12 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useContext } from 'react';
 import { makeStyles } from '@mui/styles';
-import Link from 'next/link';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -31,16 +30,22 @@ const Copyright = (props) => (
   </Typography>
 );
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, errors } = useContext(AuthContext);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const { register, errors } = useContext(AuthContext);
   const classes = useStyles();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    login(email, password);
+    if (password !== confirmPassword) {
+      setPasswordError('Passwords do not match');
+      return;
+    }
+    setPasswordError('');
+    register(email, password);
   };
 
   return (
@@ -58,7 +63,7 @@ const Login = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign Up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
@@ -83,11 +88,23 @@ const Login = () => {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
             onChange={(e) => setPassword(e.target.value)}
           />
           <Typography className={classes.errorText}>
             {errors && errors.password && <p>{errors.password}</p>}
+          </Typography>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirmPassword"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <Typography className={classes.errorText}>
+            {passwordError && <p>{passwordError}</p>}
           </Typography>
           <Button
             type="submit"
@@ -95,16 +112,8 @@ const Login = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Sign Up
           </Button>
-          <Grid container>
-            <Grid item>
-              Don&apos;t have an account?
-              <Link href="/register" variant="body2">
-                <a> Sign Up</a>
-              </Link>
-            </Grid>
-          </Grid>
         </Box>
       </Box>
       <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -112,4 +121,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
