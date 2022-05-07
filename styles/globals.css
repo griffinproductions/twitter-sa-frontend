@@ -12,3 +12,15 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.MuiAccordionSummary-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ @media (min-width: 1200px){
+  .css-1oqqzyl-MuiContainer-root {
+    max-width: 1920px;
+  }
+}
