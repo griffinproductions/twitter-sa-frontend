@@ -24,3 +24,7 @@ a {
     max-width: 1920px;
   }
 }
+
+/* [data-test="sentinelStart"] + div > div:first-child > div:first-child {
+  display: none;
+} */

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GraphPanel = ({ loaded, data }) => {
+const GraphPanel = ({ loaded, data, title }) => {
   const classes = useStyles();
   const [displayNumber, setDisplayNumber] = useState(1);
   return (
@@ -49,6 +49,9 @@ const GraphPanel = ({ loaded, data }) => {
       )}
       {loaded === 'yes' && (
         <Grid container spacing={3} className={classes.gridLayout}>
+          <Typography variant="h4" style={{ marginRight: 'auto' }}>
+            {title}
+          </Typography>
           <Grid item xs={6} md={6} lg={6} xl={6}>
             <Button color="secondary" onClick={() => setDisplayNumber(1)}>One</Button>
             <Button color="secondary" onClick={() => setDisplayNumber(2)}>Two</Button>

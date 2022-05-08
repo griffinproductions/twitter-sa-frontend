@@ -34,11 +34,12 @@ const useStyles = makeStyles((theme) => ({
 const FixtureBar = ({ fixtures, getProcessedData }) => {
   const classes = useStyles();
   const [category, setCategory] = useState('match');
+  const [team, setTeam] = useState('both');
 
   const handleSubmit = (e, fixture) => {
     e.preventDefault();
     console.log(fixture);
-    getProcessedData(fixture, category);
+    getProcessedData(fixture, category, team);
   };
   return (
     <>
@@ -73,21 +74,33 @@ const FixtureBar = ({ fixtures, getProcessedData }) => {
                   Generate Graphs
                 </Typography>
                 <FormControl color="secondary">
+                  <FormLabel color="secondary">Select team to analyse tweets for</FormLabel>
+                  <RadioGroup value={team} onChange={(e) => setTeam(e.target.value)}>
+                    <FormControlLabel value="both" control={<Radio color="secondary" />} label="Both" />
+                    <FormControlLabel value="home" control={<Radio color="secondary" />} label={fixture.teams.home.name} />
+                    <FormControlLabel value="away" control={<Radio color="secondary" />} label={fixture.teams.away.name} />
+                  </RadioGroup>
+                </FormControl>
+                <hr />
+                <FormControl color="secondary">
                   <FormLabel color="secondary">Select Timeframe to Analyse Data For</FormLabel>
                   <RadioGroup value={category} onChange={(e) => setCategory(e.target.value)}>
                     <FormControlLabel value="match" control={<Radio color="secondary" />} label="During Match Only" />
                     <FormControlLabel value="now" control={<Radio color="secondary" />} label="All Tweets to Current Date" />
                   </RadioGroup>
                 </FormControl>
-
-                <Button
-                  type="submit"
-                  color="secondary"
-                  variant="contained"
-                  endIcon={<SendIcon />}
-                >
-                  Generate
-                </Button>
+                <div>
+                  <FormControl>
+                    <Button
+                      type="submit"
+                      color="secondary"
+                      variant="contained"
+                      endIcon={<SendIcon />}
+                    >
+                      Generate
+                    </Button>
+                  </FormControl>
+                </div>
               </form>
             </AccordionDetails>
           </Accordion>
