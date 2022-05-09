@@ -22,9 +22,6 @@ const GraphSelector = ({ data }) => {
   const colorPalette = ['#05ab02', '#ab0202', '#fcba03'];
   const [words, setWords] = useState(positiveWords);
   const [options, setOptions] = useState({
-    title: {
-      text: 'Average Sentiment Per Minute',
-    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -42,9 +39,6 @@ const GraphSelector = ({ data }) => {
         saveAsImage: { show: true },
       },
     },
-    legend: {
-      data: ['Average Sentiment Per Minute'],
-    },
     xAxis: [
       {
         type: 'category',
@@ -57,7 +51,6 @@ const GraphSelector = ({ data }) => {
     yAxis: [
       {
         type: 'value',
-        name: 'Average Sentiment Per Minute',
         min: -1,
         max: 1,
         interval: 0.1,
@@ -83,9 +76,6 @@ const GraphSelector = ({ data }) => {
     switch (e.target.value) {
       case 'Average Sentiment Per Minute':
         setOptions({
-          title: {
-            text: 'Average Sentiment Per Minute',
-          },
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -103,9 +93,6 @@ const GraphSelector = ({ data }) => {
               saveAsImage: { show: true },
             },
           },
-          legend: {
-            data: ['Average Sentiment Per Minute'],
-          },
           xAxis: [
             {
               type: 'category',
@@ -118,7 +105,6 @@ const GraphSelector = ({ data }) => {
           yAxis: [
             {
               type: 'value',
-              name: 'Average Sentiment Per Minute',
               min: -1,
               max: 1,
               interval: 0.1,
@@ -130,6 +116,12 @@ const GraphSelector = ({ data }) => {
               },
             },
           ],
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true,
+          },
           series: [
             {
               name: 'Average Sentiment Per Minute',
@@ -137,13 +129,13 @@ const GraphSelector = ({ data }) => {
               data: Object.values(averageSentimentPerMinute).reverse(),
             },
           ],
+          graph: {
+            color: colorPalette,
+          },
         });
         break;
       case 'Label Percentage':
         setOptions({
-          title: {
-            text: 'Label Percentage',
-          },
           tooltip: {
             trigger: 'item',
           },
@@ -153,10 +145,6 @@ const GraphSelector = ({ data }) => {
               restore: { show: true },
               saveAsImage: { show: true },
             },
-          },
-          legend: {
-            top: '5%',
-            left: 'center',
           },
           series: [
             {
@@ -185,9 +173,6 @@ const GraphSelector = ({ data }) => {
         break;
       case 'Tweets Per Sentiment Per Minute':
         setOptions({
-          title: {
-            text: 'Tweets Per Sentiment Per Minute',
-          },
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -220,7 +205,6 @@ const GraphSelector = ({ data }) => {
           yAxis: [
             {
               type: 'value',
-              name: 'Tweets Per Sentiment Per Minute',
               min: 0,
               axisLabel: {
                 formatter: '{value}',
@@ -234,22 +218,28 @@ const GraphSelector = ({ data }) => {
             {
               name: 'Positive',
               type: 'line',
+              color: colorPalette[0],
               data: Object.values(tweetsPerSentimentPerMinute).reverse()
                 .map((value) => value.positive),
             },
             {
               name: 'Negative',
               type: 'line',
+              color: colorPalette[1],
               data: Object.values(tweetsPerSentimentPerMinute).reverse()
                 .map((value) => value.negative),
             },
             {
               name: 'Neutral',
               type: 'line',
+              color: colorPalette[2],
               data: Object.values(tweetsPerSentimentPerMinute).reverse()
                 .map((value) => value.neutral),
             },
           ],
+          graph: {
+            color: colorPalette,
+          },
         });
         break;
       case 'Positive Word Scores':
@@ -285,7 +275,7 @@ const GraphSelector = ({ data }) => {
       <ReactECharts
         option={options}
         notMerge
-        style={{ width: '100%', minHeight: '800px' }}
+        style={{ width: '100%', minHeight: '400px' }}
       />
       )}
       { (type === 'Positive Word Scores' || type === 'Negative Word Scores') && (

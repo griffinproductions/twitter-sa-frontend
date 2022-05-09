@@ -7,6 +7,7 @@ const AuthContext = createContext({
   register: () => {},
   login: () => {},
   logout: () => {},
+  updateFavorites: () => {},
 });
 
 export const AuthContextProvider = ({ children }) => {
@@ -104,8 +105,24 @@ export const AuthContextProvider = ({ children }) => {
     router.push('/');
   };
 
+  const updateFavorites = (favorites) => {
+    setUser({ ...user, favorites });
+    fetch('http://localhost:81/users/update/favorites', {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: {
+          favorites,
+        },
+      }),
+    }).catch((err) => console.log(err));
+  };
+
   const context = {
-    user, errors, register, login, logout,
+    user, errors, register, login, logout, updateFavorites,
   };
 
   return (

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined';
+import LogoutIcon from '@mui/icons-material/Logout';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import AuthContext from '../stores/authContext';
 import SidebarContext from '../stores/sidebarContext';
@@ -25,9 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
   welcome: {
     display: 'flex',
+    alignItems: 'center',
   },
   greeting: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   title: {
     display: 'flex !important',
@@ -54,7 +56,7 @@ export default function Navbar() {
             <a className={classes.title}>
               <SportsSoccerOutlinedIcon />
               <Typography
-                variant="h4"
+                variant="h5"
                 component="h1"
               >
                 Twitter SA
@@ -72,12 +74,12 @@ export default function Navbar() {
           )}
           {user && (
             <div className={classes.welcome}>
-              <Typography variant="h6" component="h1" className={classes.greeting}>
+              <Typography className={classes.greeting}>
                 Hello,
                 {' '}
                 {user.name}
               </Typography>
-              <Button variant="text" color="secondary" onClick={logout}>
+              <Button variant="contained" color="secondary" endIcon={<LogoutIcon />} onClick={logout}>
                 Sign Out
               </Button>
             </div>

@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
   }
   return (
     <>
-      <div style={{ marginLeft: open ? 130.64 : 0, transition: 'margin 200ms' }}>
+      <div style={{ marginLeft: open ? 174.446 : 0, transition: 'margin 225ms' }}>
         <Navbar open={open} />
         <Sidebar open={open} />
         {children}

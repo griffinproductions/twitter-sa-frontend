@@ -1,4 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import {
+  useEffect, useState, useCallback, useContext,
+} from 'react';
 import {
   Grid, Typography, Container, TextField, InputLabel, Box,
   Checkbox, FormControlLabel, FormGroup, Button, Alert, AlertTitle,
@@ -12,6 +14,7 @@ import { makeStyles } from '@mui/styles';
 import { CopyBlock } from 'react-code-blocks';
 import { format } from 'date-fns';
 import enGB from 'date-fns/locale/en-GB';
+import AuthContext from '../stores/authContext';
 
 const useStyles = makeStyles(() => ({
   field: {
@@ -39,11 +42,12 @@ const Builder = () => {
   const [errors, setErrors] = useState(null);
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState('');
+  const { user } = useContext(AuthContext);
 
   const handleInputChange = useCallback(() => {
     const queryString = query ? `hashtag=${encodeURIComponent(query)}` : '';
-    const startDateString = startDate ? `&startDate=${format(startDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
-    const endDateString = endDate ? `&endDate=${format(endDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
+    const startDateString = startDate ? `&endDate=${format(startDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
+    const endDateString = endDate ? `&startDate=${format(endDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
     const limitString = limit ? `&limit=${limit}` : '';
     const sensitiveString = excludeSensitive ? '&excludeSensitive=true' : '';
     let categoryString = categories.includes(true) ? '&categories=' : '';
@@ -56,7 +60,7 @@ const Builder = () => {
       categoryString = categoryString.slice(0, -1);
     }
 
-    const newUrl = `http://localhost:81/tweets/search?${queryString}${startDateString}${endDateString}${limitString}${sensitiveString}${categoryString}`;
+    const newUrl = `http://localhost:81/tweets/search?${queryString}${endDateString}${startDateString}${limitString}${sensitiveString}${categoryString}`;
     setUrl(newUrl);
   });
 
@@ -92,14 +96,15 @@ const Builder = () => {
   };
 
   return (
-    <Container>
-      <Grid container spacing={3}>
+    <Container style={{ marginTop: '8px' }}>
+      {user && (user?.permissions === 'admin' || user?.permissions === 'broadcaster') && (
+      <Grid container spacing={1}>
         <Grid item xs={12}>
           <Typography variant="h4">
             Builder
           </Typography>
         </Grid>
-        <Grid container item xs={12} md={4}>
+        <Grid container item xs={12} md={4} style={{ paddingRight: '16px', borderRight: '1px solid #ddd' }}>
           <Grid container item xs={12}>
             <form onSubmit={(e) => handleSubmit(e)}>
               <Typography variant="h5">
@@ -122,7 +127,7 @@ const Builder = () => {
               <Grid item xs={12} className={classes.field}>
                 <LocalizationProvider dateAdapter={AdapterDateFns} locale={enGB}>
                   <InputLabel htmlFor="date-range" style={{ marginBottom: '16px' }}>Tweet Date Range</InputLabel>
-                  <>
+                  <Box style={{ display: 'flex', alignItems: 'center' }}>
                     <DateTimePicker
                       renderInput={(props) => <TextField {...props} />}
                       label="Start Date"
@@ -143,7 +148,7 @@ const Builder = () => {
                       }}
                       minDateTime={startDate}
                     />
-                  </>
+                  </Box>
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12} className={classes.field}>
@@ -170,7 +175,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="exclude-sensitive"
-                          color="secondary"
+                          color="primary"
                           checked={excludeSensitive}
                           onChange={() => {
                             setExcludeSensitive(!excludeSensitive);
@@ -191,7 +196,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="include-labelled-tweets"
-                          color="secondary"
+                          color="primary"
                           checked={categories[0]}
                           onChange={() => {
                             const newCategories = [...categories];
@@ -208,7 +213,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="include-sentiment-percentages"
-                          color="secondary"
+                          color="primary"
                           checked={categories[1]}
                           onChange={() => {
                             const newCategories = [...categories];
@@ -225,7 +230,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="include-cumulative-word-sentiments"
-                          color="secondary"
+                          color="primary"
                           checked={categories[2]}
                           onChange={() => {
                             const newCategories = [...categories];
@@ -242,7 +247,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="include-average-sentiment-per-minute"
-                          color="secondary"
+                          color="primary"
                           checked={categories[3]}
                           onChange={() => {
                             const newCategories = [...categories];
@@ -259,7 +264,7 @@ const Builder = () => {
                       (
                         <Checkbox
                           id="include-per-sentiment-per-minute"
-                          color="secondary"
+                          color="primary"
                           checked={categories[4]}
                           onChange={() => {
                             const newCategories = [...categories];
@@ -274,12 +279,12 @@ const Builder = () => {
                 </FormGroup>
               </Grid>
               <Grid item xs={12} className={classes.field}>
-                <Button variant="contained" color="secondary" type="submit">Generate JSON Web Token</Button>
+                <Button variant="contained" color="primary" type="submit">Generate JSON Web Token</Button>
               </Grid>
             </form>
           </Grid>
         </Grid>
-        <Grid container item xs={12} md={8}>
+        <Grid container item xs={12} md={8} style={{ paddingLeft: '16px' }}>
           <Typography variant="h5">
             Output
           </Typography>
@@ -341,6 +346,10 @@ const Builder = () => {
           </Collapse>
         )}
       </Grid>
+      )}
+      {(!user || (user?.permissions !== 'admin' && user?.permissions !== 'broadcaster')) && (
+        <div>You are not permitted to view this resource</div>
+      )}
     </Container>
   );
 };

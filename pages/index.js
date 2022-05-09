@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from 'react';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { format } from 'date-fns';
 import GraphPanel from '../components/graphPanel';
@@ -9,8 +9,8 @@ import FixtureBar from '../components/fixtureBar';
 const useStyles = makeStyles(() => ({
   centralGrid: {
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'top',
+    justifyContent: 'start',
+    alignItems: 'flex-start',
   },
 }));
 
@@ -65,12 +65,19 @@ export default function Home() {
   }, []);
 
   return (
-    <Container style={{ marginTop: '32px' }}>
+    <Container style={{ marginTop: '16px' }}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8} className={classes.centralGrid}>
-          <GraphPanel data={tweets} loaded={loaded} title={title} />
+        <Grid container item xs={12} lg={6} xl={8} spacing={1} className={classes.centralGrid}>
+          <Grid item xs={12}>
+            <Typography variant="h5" style={{ marginLeft: '16px' }}>
+              {title}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <GraphPanel data={tweets} loaded={loaded} title={title} isFavorite={false} initial />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4} style={{ overflowY: 'scroll', maxHeight: 'calc(100vh - 80px)' }}>
+        <Grid item xs={12} lg={6} xl={4}>
           <FixtureBar fixtures={fixtures} getProcessedData={getProcessedData} />
         </Grid>
       </Grid>
