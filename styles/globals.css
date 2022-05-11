@@ -19,6 +19,10 @@ a {
   justify-content: space-between;
 }
 
+.MuiDrawer-paperAnchorTop {
+  margin-top: 64px;
+}
+
  @media (min-width: 1200px){
   .css-1oqqzyl-MuiContainer-root {
     max-width: 1920px;

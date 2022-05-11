@@ -1,12 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useContext, useEffect } from 'react';
 import {
-  Grid, Typography, Button,
+  Grid, Typography, Button, Box,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import SaveIcon from '@mui/icons-material/Save';
 import DoneIcon from '@mui/icons-material/Done';
 import CircularProgress from '@mui/material/CircularProgress';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import {
+  RiLayoutBottom2Fill, RiLayoutBottom2Line, RiLayoutColumnFill,
+  RiLayoutColumnLine, RiLayoutGridFill, RiLayoutGridLine,
+} from 'react-icons/ri';
 import GraphSelector from './graphSelector';
 import AuthContext from '../stores/authContext';
 
@@ -16,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     height: 'calc(100vh - 260px)',
+  },
+  arrangeText: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingMessage: {
     marginRight: theme.spacing(1),
@@ -47,6 +58,9 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: '8px !important',
     marginTop: '16px',
   },
+  layoutIcon: {
+    fontSize: '24px',
+  },
 }));
 
 const GraphPanel = ({
@@ -75,25 +89,57 @@ const GraphPanel = ({
     <div className={classes.graphPanel}>
       {loaded === 'no' && (
         <div className={classes.loading}>
-          <Typography>
-            No data to display. Please select a fixture to view data.
-          </Typography>
+          <Box>
+            <ErrorOutlineIcon sx={{ fontSize: '40px', color: '#888', marginRight: '16px' }} />
+          </Box>
+          <Box className={classes.arrangeText}>
+            <Box>
+              <Typography>
+                No data to display.
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="caption">
+                Please select a fixture to view data.
+              </Typography>
+            </Box>
+          </Box>
         </div>
       )}
       {loaded === 'loading' && (
         <div className={classes.loading}>
-          <Typography className={classes.loadingMessage}>
-            Loading data... Please wait, this may take a while.
-          </Typography>
-          <CircularProgress color="primary" />
+          <Box>
+            <CircularProgress color="primary" sx={{ fontSize: '40px', marginRight: '16px' }} />
+          </Box>
+          <Box className={classes.arrangeText}>
+            <Box>
+              <Typography>
+                Loading data...
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="caption">
+                Please wait, this may take a while.
+              </Typography>
+            </Box>
+          </Box>
         </div>
       )}
       {loaded === 'yes' && (
         <Grid container spacing={3} className={classes.gridLayout}>
           <Grid item xs={6} md={6} lg={6} xl={6}>
-            <Button color="primary" onClick={() => setDisplayNumber(1)}>One</Button>
-            <Button color="primary" onClick={() => setDisplayNumber(2)}>Two</Button>
-            <Button color="primary" onClick={() => setDisplayNumber(4)}>Four</Button>
+            <Button color="primary" onClick={() => setDisplayNumber(1)}>
+              {displayNumber === 1 && <RiLayoutBottom2Fill className={classes.layoutIcon} /> }
+              {displayNumber !== 1 && <RiLayoutBottom2Line className={classes.layoutIcon} /> }
+            </Button>
+            <Button color="primary" onClick={() => setDisplayNumber(2)}>
+              {displayNumber === 2 && <RiLayoutColumnFill className={classes.layoutIcon} /> }
+              {displayNumber !== 2 && <RiLayoutColumnLine className={classes.layoutIcon} /> }
+            </Button>
+            <Button color="primary" onClick={() => setDisplayNumber(4)}>
+              {displayNumber === 4 && <RiLayoutGridFill className={classes.layoutIcon} /> }
+              {displayNumber !== 4 && <RiLayoutGridLine className={classes.layoutIcon} /> }
+            </Button>
           </Grid>
           <Grid item xs={6} md={6} lg={6} xl={6} className={classes.favorite}>
             {!isFavoriteState && initial && (

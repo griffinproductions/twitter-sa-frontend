@@ -6,6 +6,7 @@ import {
   AccordionSummary,
   Button,
   Container,
+  Box,
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ExpandMore } from '@mui/icons-material';
@@ -38,7 +39,9 @@ const Favorites = () => {
                 {format(parseISO(favorite.saved), 'dd/MM/yyyy - hh:mm a')}
               </Typography>
               <Button startIcon={<DeleteForeverIcon />} color="error" variant="contained" style={{ marginRight: '8px' }} onClick={() => handleUpdateFavorites(favorite)}>
-                Remove
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                  Remove
+                </Box>
               </Button>
             </AccordionSummary>
             <AccordionDetails>

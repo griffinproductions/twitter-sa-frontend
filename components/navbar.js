@@ -7,6 +7,7 @@ import {
   Toolbar,
   Typography,
   Button,
+  Box,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined';
@@ -45,7 +46,7 @@ export default function Navbar() {
   const { toggle } = useContext(SidebarContext);
   return (
     <div>
-      <AppBar elevation={0} position="sticky">
+      <AppBar elevation={0} position="fixed" style={{ zIndex: '100000000000' }}>
         <Toolbar className={classes.root}>
           {router.pathname !== '/login' && router.pathname !== '/register' && (
             <Button onClick={toggle}>
@@ -74,11 +75,13 @@ export default function Navbar() {
           )}
           {user && (
             <div className={classes.welcome}>
-              <Typography className={classes.greeting}>
-                Hello,
-                {' '}
-                {user.name}
-              </Typography>
+              <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                <Typography className={classes.greeting}>
+                  Hello,
+                  {' '}
+                  {user.name}
+                </Typography>
+              </Box>
               <Button variant="contained" color="secondary" endIcon={<LogoutIcon />} onClick={logout}>
                 Sign Out
               </Button>

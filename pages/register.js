@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Copyright = (props) => (
-  <Typography variant="body2" color="text.secondary" align="center" {...props}>
+  <Typography variant="body2" color="#555" align="center" {...props}>
     {'Copyright © '}
     <Link color="inherit" href="https://mui.com/">
       Twitter SA
