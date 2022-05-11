@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ExpandMore } from '@mui/icons-material';
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 import AuthContext from '../stores/authContext';
 import GraphPanel from '../components/graphPanel';
 
@@ -36,7 +36,7 @@ const Favorites = () => {
                 {favorite.title}
                 {' - '}
                 {'Saved: '}
-                {format(parseISO(favorite.saved), 'dd/MM/yyyy - hh:mm a')}
+                {format(Date.parse(favorite.saved), 'dd/MM/yyyy - hh:mm a')}
               </Typography>
               <Button startIcon={<DeleteForeverIcon />} color="error" variant="contained" style={{ marginRight: '8px' }} onClick={() => handleUpdateFavorites(favorite)}>
                 <Box sx={{ display: { xs: 'none', md: 'block' } }}>
