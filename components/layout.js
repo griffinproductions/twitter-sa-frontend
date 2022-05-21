@@ -2,6 +2,7 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { Box } from '@mui/material';
+import Head from 'next/head';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
 import SidebarContext from '../stores/sidebarContext';
@@ -14,6 +15,9 @@ const Layout = ({ children }) => {
   if (router.pathname === '/login' || router.pathname === '/register') {
     return (
       <>
+        <Head>
+          <title>Twitter-SA</title>
+        </Head>
         <Navbar />
         {children}
       </>
@@ -21,6 +25,9 @@ const Layout = ({ children }) => {
   }
   return (
     <>
+      <Head>
+        <title>Twitter-SA</title>
+      </Head>
       <div>
         <Navbar open={open} />
         <Sidebar open={open} />

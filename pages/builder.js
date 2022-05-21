@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   useEffect, useState, useCallback, useContext,
 } from 'react';
@@ -12,7 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { makeStyles } from '@mui/styles';
 import { CopyBlock } from 'react-code-blocks';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
+// import { zonedTimeToUtc } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB';
 import AuthContext from '../stores/authContext';
 
@@ -46,8 +48,8 @@ const Builder = () => {
 
   const handleInputChange = useCallback(() => {
     const queryString = query ? `hashtag=${encodeURIComponent(query)}` : '';
-    const startDateString = startDate ? `&endDate=${format(startDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
-    const endDateString = endDate ? `&startDate=${format(endDate, 'yyyy-MM-dd HH:mm:ss')}` : '';
+    const startDateString = startDate ? `&endDate=${startDate.toISOString()}` : '';
+    const endDateString = endDate ? `&startDate=${endDate.toISOString()}` : '';
     const limitString = limit ? `&limit=${limit}` : '';
     const sensitiveString = excludeSensitive ? '&excludeSensitive=true' : '';
     let categoryString = categories.includes(true) ? '&categories=' : '';
@@ -60,7 +62,7 @@ const Builder = () => {
       categoryString = categoryString.slice(0, -1);
     }
 
-    const newUrl = `http://localhost:81/tweets/search?${queryString}${endDateString}${startDateString}${limitString}${sensitiveString}${categoryString}`;
+    const newUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/tweets/search?${queryString}${endDateString}${startDateString}${limitString}${sensitiveString}${categoryString}`;
     setUrl(newUrl);
   });
 
@@ -75,7 +77,7 @@ const Builder = () => {
       setOpen(true);
       return;
     }
-    fetch('http://localhost:81/users/key', {
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/key`, {
       method: 'GET',
       credentials: 'include',
       headers: {

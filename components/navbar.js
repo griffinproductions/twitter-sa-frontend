@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
   Box,
+  CircularProgress,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import SportsSoccerOutlinedIcon from '@mui/icons-material/SportsSoccerOutlined';
@@ -42,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const classes = useStyles();
   const router = useRouter();
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, fetching } = useContext(AuthContext);
   const { toggle } = useContext(SidebarContext);
   return (
     <div>
@@ -65,13 +66,22 @@ export default function Navbar() {
             </a>
           </Link>
           {!user && (
-            <Link href="/login" passHref>
-              <a className={classes.navLink}>
-                <Button variant="text" color="secondary">
-                  Login/Register
-                </Button>
-              </a>
-            </Link>
+            <>
+              <>
+                { fetching && (
+                  <Box>
+                    <CircularProgress color="secondary" sx={{ fontSize: '8px', marginRight: '16px' }} />
+                  </Box>
+                )}
+              </>
+              <Link href="/login" passHref>
+                <a className={classes.navLink}>
+                  <Button variant="text" color="secondary">
+                    Login/Register
+                  </Button>
+                </a>
+              </Link>
+            </>
           )}
           {user && (
             <div className={classes.welcome}>

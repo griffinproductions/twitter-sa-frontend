@@ -44,7 +44,7 @@ export default function Home() {
       hashtag = fixture.hashtag;
     }
     setLoaded('loading');
-    fetch(`http://localhost:81/tweets/process/all/?hashtag=${encodeURIComponent(hashtag)}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tweets/process/all/?hashtag=${encodeURIComponent(hashtag)}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -55,9 +55,11 @@ export default function Home() {
   };
 
   const getFixtures = async () => {
-    const res = await fetch('http://localhost:81/fixtures/get');
-    const data = await res.json();
-    setFixtures(data);
+    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/fixtures/get`)
+      .then((response) => response.json())
+      .then((data) => {
+        setFixtures(data);
+      }).catch((err) => console.log(err));
   };
 
   useEffect(() => {

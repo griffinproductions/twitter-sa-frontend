@@ -7,6 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import { CircularProgress } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -35,7 +36,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const { register, errors } = useContext(AuthContext);
+  const { register, errors, loading } = useContext(AuthContext);
   const classes = useStyles();
 
   const handleSubmit = async (e) => {
@@ -73,6 +74,7 @@ const Register = () => {
             id="email"
             label="Email Address"
             name="email"
+            type="email"
             autoComplete="email"
             autoFocus
             onChange={(e) => setEmail(e.target.value)}
@@ -109,6 +111,7 @@ const Register = () => {
           <Button
             type="submit"
             fullWidth
+            endIcon={loading && <CircularProgress color="secondary" />}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >

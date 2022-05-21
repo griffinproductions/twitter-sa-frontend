@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { CircularProgress } from '@mui/material';
 import AuthContext from '../stores/authContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,7 @@ const Copyright = (props) => (
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, errors } = useContext(AuthContext);
+  const { login, errors, loading } = useContext(AuthContext);
   const classes = useStyles();
 
   const handleSubmit = (e) => {
@@ -68,6 +69,7 @@ const Login = () => {
             id="email"
             label="Email Address"
             name="email"
+            type="email"
             autoComplete="email"
             autoFocus
             onChange={(e) => setEmail(e.target.value)}
@@ -92,6 +94,7 @@ const Login = () => {
           <Button
             type="submit"
             fullWidth
+            endIcon={loading && <CircularProgress color="secondary" />}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
