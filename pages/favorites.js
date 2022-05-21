@@ -8,15 +8,35 @@ import {
   Container,
   Box,
 } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { ExpandMore } from '@mui/icons-material';
 import { format } from 'date-fns';
 import AuthContext from '../stores/authContext';
 import GraphPanel from '../components/graphPanel';
 
+const useStyles = makeStyles(() => ({
+  empty: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'calc(100vh - 260px)',
+  },
+  arrangeText: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  panel: {
+    width: '100%',
+  },
+}));
+
 const Favorites = () => {
+  const classes = useStyles();
   const { user, updateFavorites } = useContext(AuthContext);
-  console.log(user);
   const handleUpdateFavorites = (currentFavorite) => {
     let { favorites } = user;
     favorites = favorites.filter((favorite) => favorite.saved !== currentFavorite.saved);
@@ -49,7 +69,27 @@ const Favorites = () => {
             </AccordionDetails>
           </Accordion>
         ))}
-        {!user?.favorites?.length && <Typography variant="body1">No saved datasets</Typography>}
+        {!user?.favorites?.length && (
+          <div className={classes.panel}>
+            <div className={classes.empty}>
+              <Box className={classes.arrangeText}>
+                <Box>
+                  <ErrorOutlineIcon sx={{ fontSize: '40px', color: '#888', marginRight: '16px' }} />
+                </Box>
+                <Box>
+                  <Typography>
+                    No saved datasets.
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="caption">
+                    Please be logged in and have a dataset to be able to view past datasets.
+                  </Typography>
+                </Box>
+              </Box>
+            </div>
+          </div>
+        )}
       </div>
     </Container>
   );

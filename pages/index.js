@@ -47,11 +47,10 @@ export default function Home() {
     fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/tweets/process/all/?hashtag=${encodeURIComponent(hashtag)}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setTweets(data);
         setLoaded('yes');
         setTitle(`Data for ${fixture.teams.home.name} vs ${fixture.teams.away.name} for ${team} during ${category}`);
-      }).catch((err) => console.log(err));
+      }).catch((err) => err);
   };
 
   const getFixtures = async () => {
@@ -59,7 +58,7 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         setFixtures(data);
-      }).catch((err) => console.log(err));
+      }).catch((err) => err);
   };
 
   useEffect(() => {
@@ -71,7 +70,7 @@ export default function Home() {
       <Grid container spacing={3}>
         <Grid container item xs={12} lg={6} xl={8} spacing={1} className={classes.centralGrid}>
           <Grid item xs={12}>
-            <Typography variant="h5" style={{ marginLeft: '16px' }}>
+            <Typography variant="h5" component="h6" style={{ marginLeft: '16px' }}>
               {title}
             </Typography>
           </Grid>

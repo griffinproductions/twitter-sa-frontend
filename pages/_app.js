@@ -18,12 +18,12 @@ const generateClassName = createGenerateClassName({
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1DA1F2',
+      main: '#0872B4',
       contrastText: '#fff',
     },
     secondary: {
       main: '#fff',
-      contrastText: '#1DA1F2',
+      contrastText: '#0872B4',
     },
   },
   typography: {

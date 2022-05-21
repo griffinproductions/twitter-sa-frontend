@@ -50,7 +50,7 @@ export default function Navbar() {
       <AppBar elevation={0} position="fixed" style={{ zIndex: '100000000000' }}>
         <Toolbar className={classes.root}>
           {router.pathname !== '/login' && router.pathname !== '/register' && (
-            <Button onClick={toggle}>
+            <Button onClick={toggle} name="toggle sidebar">
               <DehazeIcon color="secondary" />
             </Button>
           )}

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 import { useState } from 'react';
 import { makeStyles } from '@mui/styles';
@@ -70,7 +71,6 @@ const FixtureBar = ({ fixtures, getProcessedData }) => {
 
   const handleSubmit = (e, fixture) => {
     e.preventDefault();
-    console.log(fixture);
     getProcessedData(fixture, category, team);
   };
   return (
@@ -96,7 +96,7 @@ const FixtureBar = ({ fixtures, getProcessedData }) => {
                         {fixture.teams.home.name}
                       </Typography>
                     </Box>
-                    <Avatar src={fixture.teams.home.logo} className={classes.homeAvatar} />
+                    <Avatar src={fixture.teams.home.logo} className={classes.homeAvatar} alt={`${fixture.teams.home.name} logo`} />
                   </Typography>
                   <Typography>
                     {fixture.goals.home}
@@ -104,7 +104,7 @@ const FixtureBar = ({ fixtures, getProcessedData }) => {
                     {fixture.goals.away}
                   </Typography>
                   <Typography variant="p" className={classes.team}>
-                    <Avatar src={fixture.teams.away.logo} className={classes.awayAvatar} />
+                    <Avatar src={fixture.teams.away.logo} className={classes.awayAvatar} alt={`${fixture.teams.away.name} logo`} />
                     <Box display={{ xs: 'none', sm: 'inline' }}>
                       <Typography>
                         {fixture.teams.away.name}
@@ -141,6 +141,7 @@ const FixtureBar = ({ fixtures, getProcessedData }) => {
                       type="submit"
                       color="primary"
                       variant="contained"
+                      name="generate"
                       endIcon={<SendIcon />}
                     >
                       Generate

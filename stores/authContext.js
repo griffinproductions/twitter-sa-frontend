@@ -31,13 +31,11 @@ export const AuthContextProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Fetching ', fetching);
         setFetching(false);
         if (data.errors) {
           setErrors(data.errors);
           return;
         }
-        console.log(data);
         setErrors(null);
         setUser(data);
       })
@@ -46,6 +44,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     getSession();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const register = async (email, password) => {
@@ -98,7 +97,6 @@ export const AuthContextProvider = ({ children }) => {
         }
         setErrors(null);
         setUser(data);
-        console.log(data);
         router.push('/');
       })
       .catch((err) => err);

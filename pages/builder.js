@@ -91,10 +91,9 @@ const Builder = () => {
         if (data.message) {
           setErrors(data.message);
           setOpen(true);
-          console.log(data.message);
         }
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => err.message);
   };
 
   return (

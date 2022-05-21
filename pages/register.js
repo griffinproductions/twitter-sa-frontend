@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
 const Copyright = (props) => (
   <Typography variant="body2" color="#555" align="center" {...props}>
     {'Copyright © '}
-    <Link color="inherit" href="https://mui.com/">
-      Twitter SA
+    <Link color="inherit" href="/">
+      William Diggens
     </Link>
     {' '}
     {new Date().getFullYear()}
@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" sx={{ marginTop: '80px' }}>
       <CssBaseline />
       <Box
         sx={{

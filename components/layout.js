@@ -17,6 +17,8 @@ const Layout = ({ children }) => {
       <>
         <Head>
           <title>Twitter-SA</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="description" content="Twitter-SA" />
         </Head>
         <Navbar />
         {children}
